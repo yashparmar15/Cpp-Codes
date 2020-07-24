@@ -45,3 +45,30 @@ public:
         }
     }
 };
+
+
+
+//better approach
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size() - 1;
+        int i = 0;
+        int zero = 0;
+        while(i <= n){
+            if(nums[i] == 0){
+                swap(nums[i],nums[zero]);
+                zero++;
+                i++;
+            } else{
+                if(nums[i] == 1)
+                    i++;
+                else{
+                    swap(nums[i],nums[n]);
+                    n--;
+                }
+            }
+        }
+    }
+};
+
