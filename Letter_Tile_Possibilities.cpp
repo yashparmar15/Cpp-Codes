@@ -1,41 +1,30 @@
 class Solution {
 public:
-    vector<int> gardenNoAdj(int n, vector<vector<int>>& paths) {
-        vector<int> flowersInGarden(n, -1);
-        vector<vector<int>> graph(n);
+    void recur(string temp,vector<int> H,string tiles,set<string> &s){
         
-        for(auto p: paths){
-            graph[p[0] - 1].push_back(p[1] - 1);
-            graph[p[1] - 1].push_back(p[0] - 1);
+        if(temp.size() > 0 and temp.size() <= tiles.size())
+            s.insert(temp);
+        if(temp.size() > tiles.size())
+            return;
+        for(int i = 0 ; i < tiles.size() ; i++){
+            if(H[int(tiles[i]) - 65] > 0){
+                temp.push_back(tiles[i]);
+                H[int(tiles[i]) - 65]--;
+                recur(temp,H,tiles,s);
+                temp.pop_back();   
+                H[int(tiles[i]) - 65]++;
+           }
         }
-        
-        for(int garden = 0; garden < n; garden++){ 
-            vector<bool> used(5, false);
-            int flower = getFlower(graph[garden], flowersInGarden, used);
-            if(flower != -1){
-                flowersInGarden[garden] = flower;
-                used[flower] = true; 
-            }
-            
-        }
-        return flowersInGarden;
     }
-private:
-    int getFlower(vector<int> &adjG, vector<int> &flowersInGarden, vector<bool> &used){
-      
-        for(int flower = 1; flower <= 4; flower++){
-            if(used[flower]) continue;
-            bool isPlanted = false;
-            for(auto g: adjG){
-                if(flowersInGarden[g] != -1 && flowersInGarden[g] == flower){
-                    isPlanted = true;
-                    break;
-                }
-            }
-            if(!isPlanted){
-                return flower;
-            }
+    int numTilePossibilities(string tiles) {
+        int ans = 0;
+        string temp = "";
+        set<string> s;
+        vector<int> H(26,0);
+        for(int i = 0 ; i < tiles.size() ; i++){
+            H[int(tiles[i]) - 65]++;
         }
-        return -1; 
+        recur(temp,H,tiles,s);
+        return s.size();
     }
 };
