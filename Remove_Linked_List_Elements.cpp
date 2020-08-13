@@ -19,29 +19,27 @@ Output: 1->2->3->4->5*/
 class Solution {
 public:
     ListNode* removeElements(ListNode* head, int val) {
-        if(head == NULL){
-            return NULL;   
-        }
-        if(head->next == NULL){
-            if(head->val == val)
+        if(head == NULL)
+            return NULL;
+        while(head->val == val){
+            if(head->next == NULL)
                 return NULL;
-            return head;
+            head = head->next;
         }
-        ListNode *ans = NULL;
-        ListNode *temp = ans;
-        ListNode *t = head;
-        while(t != NULL){
-            if(t->val != val){
-                if(ans == NULL){
-                    ans = temp = new ListNode(t->val);
-                }
-                else{
-                    temp->next = new ListNode(t->val);
-                    temp = temp->next;
-                }
+        ListNode* temp = head->next, *t =head;
+        while(temp != NULL){
+            if(temp->val == val){
+                if(temp->next == NULL)
+                    t->next = NULL;
+                else
+                    t->next = temp->next;
+                temp = temp->next;
             }
-            t = t->next;
+            else{
+                temp = temp->next;
+                t = t->next;
+            }
         }
-        return ans;
+        return head;
     }
 };
