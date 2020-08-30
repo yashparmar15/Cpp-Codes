@@ -41,3 +41,26 @@ public:
         return cut[n];
     }
 };
+
+
+
+/////////////////////////////////////////////////////////////////////////InterviewBit AC Solution //////////////////////////////////
+int Solution::minCut(string s) {
+    vector<int> dp(s.size(),0);
+        for(int i = 0 ; i < s.size() ; i++){
+            string t1 = "",t2 = "";
+            int count = 0;
+            for(int j = i ; j >= 0 ; j--){
+                t1 = t1 + s[j];
+                t2 = s[j] + t2;
+                if(t1 == t2)
+                    count = j;
+            }
+            if(count == 0)
+                dp[i] = 0;
+            else
+                dp[i] = min(dp[count - 1] + 1,dp[i - 1] + 1);
+        }
+        return dp[s.size() - 1];
+}
+
