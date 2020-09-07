@@ -57,3 +57,41 @@ public:
         return 1;
     }
 };
+
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+class Solution {
+public:
+    bool wordPattern(string str, string pattern) {
+        unordered_map<string,char> M1;
+        unordered_map<char,string> M2;
+        string word = "";
+        pattern += " ";
+        int index = 0;
+        for(int i = 0 ; i < pattern.size() ; i++){
+            if(pattern[i] == ' '){
+                if(index >= str.size())
+                    return false;
+                if(M1.find(word) == M1.end())
+                    M1[word] = str[index];
+                else
+                    if(M1[word] != str[index])
+                        return false;
+                if(M2.find(str[index]) == M2.end())
+                    M2[str[index]] = word;
+                else
+                    if(M2[str[index]] != word)
+                        return false;
+                index++;
+                word = "";
+            } else word += pattern[i];
+        }
+        if(index < str.size()) return false;
+        return true;
+    }
+};
