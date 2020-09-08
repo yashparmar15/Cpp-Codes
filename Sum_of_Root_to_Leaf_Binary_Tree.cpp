@@ -57,3 +57,32 @@ public:
         return answer(root,0);
     }
 };
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+
+class Solution {
+public:
+    int ans = 0;
+    void recur(TreeNode* root, string temp){
+        if(!root) return;
+        temp += to_string(root->val);
+        if(!root->left and !root->right){
+            int num = 0;
+            for(int i = temp.size() - 1 ; i >= 0 ; i--)
+                num = num + (pow(2,temp.size() - 1 - i)) * (int(temp[i]) - 48);
+            ans += num;
+            return;
+        }
+        recur(root->left,temp);
+        recur(root->right,temp);
+    }
+    int sumRootToLeaf(TreeNode* root) {
+        string temp = "";
+        recur(root,temp);
+        return ans;
+    }
+};
