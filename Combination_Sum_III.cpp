@@ -53,3 +53,30 @@ public:
         return sol;
     }
 };
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+class Solution {
+public:
+    vector<vector<int>> ans;
+    void recur(int &k,int &n,vector<int> temp,int sum,int index){
+        if(sum > n or temp.size() > k) return;
+        if(temp.size() == k and sum == n){
+            ans.push_back(temp);
+            return;
+        }
+        for(int i = index ; i <= 9 ; i++){
+            temp.push_back(i);
+            recur(k,n,temp,sum + i,i+1);
+            temp.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> temp;
+        recur(k,n,temp,0,1);
+        return ans;
+    }
+};
