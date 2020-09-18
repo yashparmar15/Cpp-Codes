@@ -27,3 +27,44 @@ public:
         return res;
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> M;
+        for(int i = 0 ; i < nums.size() ; i++)
+            M[nums[i]]++;
+        vector<int> ans(2,0);
+        int flag;
+        for(int i = 0 ; i < nums.size() ; i++){
+            if(target == 2*nums[i] and M[nums[i]] > 1){
+                ans[0] = i;
+                flag = nums[i];
+                break;
+            } else {
+                if(M[target - nums[i]] and nums[i] != target - nums[i]){
+                    ans[0] = i;
+                    flag = target - nums[i];
+                    break;
+                }
+            }
+        }
+        for(int i = 0 ; i < nums.size() ; i++)
+            if(flag == nums[i] and i != ans[0]){
+                ans[1] = i;
+                break;
+            }
+        return ans;
+    }
+};
