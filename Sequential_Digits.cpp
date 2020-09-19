@@ -39,3 +39,34 @@ public:
         return ans;
     }
 };
+
+
+/////////////////////////////////////////////////////
+
+class Solution {
+public:
+    vector<int> ans;
+    void backtrack(string temp,int &low,int &high,int &lowlen,int &highlen,int index){
+        if(temp.size() >= lowlen and temp.size() <= highlen){
+            int num = 0;
+            for(int i = 0 ; i < temp.size() ; i++)
+                num = num * 10 + int(temp[i]) - 48;
+            if(num >= low and num <= high)
+                ans.push_back(num);
+        }
+        for(int i = index ; i <= 9 ; i++){
+            if(temp.size() == 0)
+                backtrack(temp + to_string(i),low,high,lowlen,highlen,i+1);
+            else if(int(i) == int(temp[temp.size() - 1]) - 47)
+                backtrack(temp + to_string(i),low,high,lowlen,highlen,i+1);
+        }
+    }
+    vector<int> sequentialDigits(int low, int high) {
+        int lowlen = to_string(low).size();
+        int highlen = to_string(high).size();
+        string temp = "";
+        backtrack(temp,low,high,lowlen,highlen,1);
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
