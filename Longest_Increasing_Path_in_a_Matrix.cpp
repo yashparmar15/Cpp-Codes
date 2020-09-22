@@ -53,3 +53,51 @@ public:
         return ans;
     }
 };
+
+
+
+
+
+
+
+
+//////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    int ans = 0;
+    int dfs(vector<vector<int>> &matrix,int i,int j,vector<vector<int>> &dp){
+        if(i < 0 or j < 0 or i >= matrix.size() or j >= matrix[0].size() or matrix[i][j] == INT_MIN) return 0;
+        if(dp[i][j]) return dp[i][j];
+        if(i + 1 < matrix.size() and matrix[i + 1][j] > matrix[i][j]) dp[i][j] = max(dp[i][j],dfs(matrix,i+1,j,dp));
+        if(j + 1 < matrix[0].size() and matrix[i][j + 1] > matrix[i][j]) dp[i][j] = max(dp[i][j],dfs(matrix,i,j+1,dp));
+        if(i - 1 >= 0 and matrix[i - 1][j] > matrix[i][j]) dp[i][j] = max(dp[i][j],dfs(matrix,i-1,j,dp));
+        if(j - 1 >= 0 and matrix[i][j - 1] > matrix[i][j]) dp[i][j] = max(dp[i][j],dfs(matrix,i,j-1,dp));
+        dp[i][j]++;
+        return dp[i][j];
+    }
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.size() == 0) return 0;
+        vector<vector<int>> dp(matrix.size(),vector<int> (matrix[0].size(),0));
+        for(int i = 0 ; i < matrix.size() ; i++){
+            for(int j = 0 ; j < matrix[0].size() ; j++){
+                int count = dfs(matrix,i,j,dp);
+                ans = max(ans,count);
+            }
+        }
+        return ans;
+    }
+};
