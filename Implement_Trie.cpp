@@ -53,3 +53,59 @@ public:
  * bool param_2 = obj->search(word);
  * bool param_3 = obj->startsWith(prefix);
  */
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+class Trie {
+    struct TrieNode{
+        map<char,TrieNode*> child;
+        int end;
+        TrieNode () : end(0){}
+    };
+        
+public:
+    Trie() {
+        root = new TrieNode();
+    }
+
+    // Inserts a word into the trie.
+    void insert(string s) {
+        TrieNode* cur = root;
+        for(int i = 0 ; i < s.size() ; i++){
+            if(cur->child.count(s[i]) == 0)
+                cur->child[s[i]] = new TrieNode();
+            cur = cur->child[s[i]];
+        }
+        cur->end = 1;
+    }
+
+    // Returns if the word is in the trie.
+    bool search(string key) {
+        return find(key, 1);
+    }
+
+    // Returns if there is any word in the trie
+    // that starts with the given prefix.
+    bool startsWith(string prefix) {
+        return find(prefix, 0);
+    }
+
+private:
+    TrieNode* root;
+    bool find(string s, int exact_match)
+    {
+        TrieNode* cur = root;
+        for(int i = 0 ; i < s.size() ; i++){
+            if(cur->child.count(s[i]) == 0)
+                return false;
+            cur = cur->child[s[i]];
+        }
+        if(exact_match)
+            return cur->end ? true : false;
+        return true;
+    }
+};
