@@ -1,6 +1,23 @@
 class Solution{
 public:
     int countWays(string a, string b){
+        
+        
+        //          g   k   s
+        //      1   0   0   0            
+        //  g   1   1   0   0   
+        //  e   1   1   0   0   
+        //  e   1   1   0   0
+        //  k   1   1   1   0
+        //  s   1   1   1   1
+        //  f   1   1   1   1
+        //  o   1   1   1   1
+        //  r   1   1   1   1   
+        //  g   1   2   1   1
+        //  e   1   2   1   1
+        //  e   1   2   1   1
+        //  k   1   2   3   1
+        //  s   1   2   3   4
         int m = a.length(); 
         int n = b.length(); 
         int lookup[m + 1][n + 1] = { { 0 } }; 
