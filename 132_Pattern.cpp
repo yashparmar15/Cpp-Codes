@@ -45,3 +45,24 @@ public:
         return !s.empty() and prev > s.top();
     }
 };
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+
+
+class Solution {
+public:
+    bool find132pattern(vector<int>& nums) {
+        int Min = INT_MAX;
+        for(int i = 0 ; i < nums.size() - 1 ; i++){
+            Min = min(Min,nums[i]);
+            for(int j = i + 1 ; j < nums.size() ; j++){
+                if(nums[j] < nums[i] and Min < nums[j]) return true;
+            }
+        }
+        return false;
+    }
+};
