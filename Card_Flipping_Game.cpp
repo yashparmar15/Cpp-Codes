@@ -79,3 +79,21 @@ public:
         return ans;
     }
 };
+
+
+////////////////////////////////////////////////////////////////////////
+
+
+
+
+class Solution {
+public:
+    int flipgame(vector<int>& f, vector<int>& b) {
+        unordered_set<int> same;
+        for (int i = 0; i < f.size(); ++i) if (f[i] == b[i]) same.insert(f[i]);
+        int res = 10000;
+        for (int & i : f) if (same.count(i) == 0) res = min(res, i);
+        for (int & i : b) if (same.count(i) == 0) res = min(res, i);
+        return res % 10000;
+    }
+};
