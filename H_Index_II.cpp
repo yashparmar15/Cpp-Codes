@@ -29,3 +29,26 @@ public:
         return 0;
     }
 };
+
+
+////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    int hIndex(vector<int>& v) {
+        int n = v.size();
+        if(!n) return n;
+        int low = 0,high = v.size() - 1;
+        int ans = 0;
+        while(low <= high){
+            int mid = low + (high - low) / 2;
+            if(v[mid] >= n - mid){
+                ans = n - mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
