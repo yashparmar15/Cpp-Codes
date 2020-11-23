@@ -33,3 +33,28 @@ public:
         return count;
     }
 };
+
+
+
+
+////////////////////////////////////////////////////
+
+
+class Solution {
+public:
+    int countNumbersWithUniqueDigits(int n) {
+        if(n == 0) return 1;
+        if(n == 1) return 10;
+        vector<int> dp(n,0);
+        dp[0] = 9;
+        int temp = 9 * 9;
+        int flag = 8;
+        dp[1] = 91; 
+        for(int i = 2 ; i < n ; i++){
+            dp[i] = dp[i - 1] + temp * flag;
+            temp = temp * flag;
+            flag--;
+        }
+        return dp[n - 1];
+    }
+};
