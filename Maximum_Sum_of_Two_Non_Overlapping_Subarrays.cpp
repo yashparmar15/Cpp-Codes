@@ -65,3 +65,47 @@ public:
         return ans;
     }
 };
+
+
+
+//////////////////////// O(N) ///////////////////////
+
+
+class Solution {
+public:
+    int maxSumTwoNoOverlap(vector<int>& A, int L, int M) {
+        vector<int> v1(A.size(),-1),v2(A.size(),-1);
+        int s = 0;
+        for(int i = 0 ; i < L ; i++)
+            s += A[i];
+        v1[0] = s;
+        for(int i = 1 ; i <= A.size() - L ; i++){
+            s = s - A[i - 1] + A[i + L - 1];
+            v1[i] = s;
+        }
+        s = 0;
+        for(int i = 0 ; i < M ; i++)
+            s += A[i];
+        v2[0] = s;
+        for(int i = 1 ; i <= A.size() - M ; i++){
+            s = s - A[i - 1] + A[i + M - 1];
+            v2[i] = s;
+        }
+        int max1 = -1,max2 = -1;
+        vector<int> v3(A.size(),-1),v4(A.size(),-1);
+        for(int i = v1.size() - 1 ; i >= 0 ; i--){
+            max1 = max(max1,v1[i]);
+            max2 = max(max2,v2[i]);
+            v3[i] = max1;
+            v4[i] = max2;
+        }
+        int ans = 0;
+        for(int i = 0 ; i < A.size() - M ; i++){
+            ans = max(ans,v2[i] + v3[i + M]);
+        }
+        for(int i = 0 ; i < A.size() - L ; i++){
+            ans = max(ans,v1[i] + v4[i + L]);
+        }
+        return ans;
+    }
+};
