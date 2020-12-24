@@ -48,3 +48,42 @@ public:
         return ans;
     }
 };
+
+
+/////////////////////////////////////////////////////////////
+
+
+
+
+class Solution {
+public:
+    int numTeams(vector<int>& v) {
+        int ans = 0;
+        int A[v.size()],B[v.size()];
+        memset(A,0,sizeof(A));
+        memset(B,0,sizeof(B));
+        for(int i = 0 ; i < v.size() ; i++)
+            for(int j = 0 ; j < i ; j++)
+                if(v[j] < v[i])
+                    A[i]++;
+        for(int i = 0 ; i < v.size() ; i++)
+            for(int j = i + 1 ; j < v.size() ; j++)
+                if(v[j] > v[i])
+                    B[i]++;
+        for(int i = 0 ; i < v.size() ; i++)
+            ans += A[i] * B[i];
+        memset(A,0,sizeof(A));
+        memset(B,0,sizeof(B));
+        for(int i = 0 ; i < v.size() ; i++)
+            for(int j = 0 ; j < i ; j++)
+                if(v[j] > v[i])
+                    A[i]++;
+        for(int i = 0 ; i < v.size() ; i++)
+            for(int j = i + 1 ; j < v.size() ; j++)
+                if(v[j] < v[i])
+                    B[i]++;
+        for(int i = 0 ; i < v.size() ; i++)
+            ans += A[i] * B[i];
+        return ans;
+    }
+};
