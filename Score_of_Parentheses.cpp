@@ -46,3 +46,36 @@ public:
         return cur;
     }
 };
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+
+class Solution {
+public:
+    int scoreOfParentheses(string S) {
+        stack<pair<char,int>> stk;
+        for(int i = 0 ; i < S.size() ; i++){
+            if(S[i] == '('){
+                stk.push(make_pair(S[i],1));
+            } else {
+                int count = 0;
+                while(!stk.empty() and stk.top().first != '('){
+                    count += stk.top().second;
+                    stk.pop();
+                }
+                if(!stk.empty()){
+                    stk.pop();
+                    stk.push(make_pair('-',max(1,2 * count)));
+                }
+            }
+        }
+        int ans = 0;
+        while(!stk.empty()){
+            ans += stk.top().second;
+            stk.pop();
+        }
+        return ans;
+    }
+};
